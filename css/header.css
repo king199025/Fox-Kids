@@ -1,0 +1,307 @@
+/*===Header Style===*/
+
+header {
+    position: relative;
+    width: 100%;
+    height: 166px;
+}
+
+header .logo {
+    position: absolute;
+    left: 42px;
+    top: 14px;
+    cursor: pointer;
+    height: 72px;
+    width: 106px;
+    background: url('../images/logo.png');
+}
+
+header .buttons {
+    position: absolute;
+    top: 41px;
+    left: 211px;
+    width: 350px;
+    height: 40px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    font: 14px/34px 'robotoregular';
+    color: #fff;
+    text-align: center;
+}
+
+header .buttons .first_lesson {
+    width: 152px;
+    height: 40px;
+    border: 3px solid #ddd;
+    border-radius: 40px;
+    background: #3b96f7;
+    cursor: pointer;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+}
+
+header .buttons .franchise {
+    width: 178px;
+    height: 40px;
+    border: 3px solid #ddd;
+    border-radius: 40px;
+    background: #ea6c36;
+    cursor: pointer;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+}
+
+header .buttons div:hover {
+    border: 3px solid #c7c7c7;
+}
+
+header .number {
+    position: absolute;
+    top: 44px;
+    right: 31px;
+    width: auto;
+    color: rgba(234, 108, 54, 0.5);
+    font: 14px 'robotoregular';
+}
+
+header .number span {
+    color: #ea6c36;
+}
+
+header .map {
+    position: absolute;
+    top: 67px;
+    right: 32px;
+    width: auto;
+    color: #ea6c36;
+    cursor: pointer;
+    font: 14px 'robotoregular';
+    border-bottom: 1px dotted #ea6c36;
+}
+
+header .map:before {
+    position: absolute;
+    left: -17px;
+    top: 2px;
+    display: block;
+    width: 12px;
+    height: 16px;
+    background: url('../images/map_icon.png');
+    content: '';
+}
+
+header nav.pc_menu {
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    height: 47px;
+    background: #fafafa;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    overflow: hidden;
+}
+
+header nav.pc_menu ul {
+    position: absolute;
+    left: 35px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: auto;
+    height: 47px;
+}
+
+header nav.pc_menu ul li {
+    background: #fafafa;
+    cursor: pointer;
+    -webkit-transition: all linear .3s;
+    transition: all linear .3s;
+}
+
+header nav.pc_menu ul li:hover {
+    background: #ea6c36;
+}
+
+header nav.pc_menu ul li a {
+    display: block;
+    padding: 9px;
+    height: 45px;
+    color: #ea6c36;
+    text-align: center;
+    text-decoration: none;
+    font: 15px / 27px 'robotoregular';
+}
+
+header nav.pc_menu ul li:hover a {
+    color: #fff;
+}
+
+header nav.pc_menu ul li.active {
+    background: #ea6c36;
+}
+
+header nav.pc_menu ul li.active a {
+    color: #fff;
+}
+
+.mobile_menu_name {
+    display: none;
+}
+
+.mobile_menu {
+    display: none;
+}
+
+.mob_name {
+    display: none;
+}
+
+
+/*===PopUpMap====*/
+
+.popUpCity {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .9);
+    z-index: 999;
+    opacity: 1;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.popUpCity.disable {
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: all linear .25s, z-index linear 0s .25s;
+    transition: all linear .25s, z-index linear 0s .25s;
+}
+
+.popUpCity .bold {
+    text-align: center;
+    color: #ea6c36;
+    font: 30px / 30px 'iskraBold';
+    position: absolute;
+    width: 100%;
+    top: 46px;
+}
+
+.popUpCity .close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: url('../images/Close.png') center/cover no-repeat;
+    position: absolute;
+    right: 60px;
+    top: 45px;
+    z-index: 99999;
+}
+
+.popUpCity .holderCity {
+    text-align: center;
+    font: 24px / 24px 'iskraBold';
+    color: #94948e;
+    margin: auto;
+    -webkit-transition: all linear .2s;
+    transition: all linear .2s;
+}
+
+.popUpCity .holderCity span {
+    -webkit-transition: all linear .2s;
+    transition: all linear .2s;
+    padding: 5px 0 7px 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.popUpCity .holderCity span:hover {
+    cursor: pointer;
+    color: #ea6c36;
+}
+
+.popUpCity .holderCity span.active {
+    color: #ea6c36;
+}
+
+
+/*===PopUpMap====*/
+
+.up_button {
+    width: 42px;
+    height: 42px;
+    position: fixed;
+    bottom: -42px;
+    right: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+    opacity: 0;
+}
+
+.up_button.active {
+    opacity: 1;
+    bottom: 40px;
+}
+
+.up_button.active.add_bottom {
+    bottom: 100px;
+}
+
+.up_button:before,
+.up_button:after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 1px;
+    top: 1px;
+    opacity: .85;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+}
+
+.up_button:before {
+    background: url('../images/up_button.png') center/cover no-repeat;
+    z-index: 2;
+}
+
+.up_button:after {
+    background: url('../images/up_button_hover.png') center/cover no-repeat;
+/*    opacity: 0;*/
+    z-index: 1;
+}
+
+.up_button:hover:before {
+    opacity: 0;
+}
+
+.up_button:hover:after {
+    opacity: .85;
+}

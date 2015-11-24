@@ -1,0 +1,186 @@
+/*===Header===*/
+
+header {
+    -webkit-transition: all ease-in-out .25s;
+    transition: all ease-in-out .25s;
+    background: #fff;
+}
+
+header.page_with_mob_name {
+    height: 216px;
+}
+
+header.active {
+    height: 437px;
+}
+
+.mob_name {
+    display: block;
+    position: absolute;
+    top: 120px;
+    height: 50px;
+    width: 100%;
+    background: #ea6c36;
+    color: #fff;
+    text-align: center;
+    font: 22px/50px 'robotobold';
+}
+
+header .logo {
+    top: 14px;
+    left: 9px;
+}
+
+header .buttons {
+    display: none;
+}
+
+header .number {
+    right: 14px;
+}
+
+header .map {
+    right: 14px;
+}
+
+header .pc_menu {
+    display: none;
+}
+
+header .mobile_menu_name {
+    display: block;
+    width: 100%;
+    height: 46px;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    color: #ea6c36;
+    font: 18px / 44px 'robotobold';
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    cursor: pointer;
+    padding-left: 8px;
+    z-index: 999 !important;
+}
+
+header .mobile_menu_name .mobile_hamburger {
+    position: absolute;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 11px;
+    height: 10px;
+    left: 50%;
+    top: 18px;
+    margin-left: -38px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+header .mobile_hamburger .line {
+    width: 11px;
+    height: 2px;
+    background: #ea6c36;
+}
+
+header .mobile_menu {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background-color: #fafafa;
+    border-top: 1px solid rgba(0, 0, 0, .0);
+    position: absolute;
+    top: 170px;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: all ease-in-out .35s;
+    transition: all ease-in-out .35s;
+    z-index: -999;
+}
+
+header .mobile_menu a {
+    color: #333;
+    font: 500 16px / 26px 'robotobold';
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin: 3px 0;
+    opacity: 0;
+    -webkit-transition: all ease-in-out .35s .35s;
+    transition: all ease-in-out .35s .35s;
+}
+
+header.active .mobile_menu {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    height: auto;
+    padding: 9px 0;
+    -webkit-transition: all ease-in-out .35s;
+    transition: all ease-in-out .35s;
+    z-index: 1;
+}
+
+header.active .mobile_menu a {
+    opacity: 1;
+    -webkit-transition: all ease-in-out .35s .35s;
+    transition: all ease-in-out .35s .35s;
+}
+
+
+/*===Footer===*/
+
+footer .cont_company {
+    margin: 10px 0 0 15px;
+    height: 40px;
+}
+
+footer .f_nav,
+footer .made_in {
+    display: none;
+}
+
+
+/*===PopUpMap====*/
+
+.popUpCity .bold {
+    display: none;
+}
+
+.popUpCity .close {
+    top: 15px;
+    right: 15px;
+}
+
+.popUpCity .holderCity {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    margin-top: -106px;
+}
+
+.popUpCity .holderCity span {
+    width: 100%;
+    display: block;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    font: 18px / 18px 'robotobold';
+    color: #333;
+}
+
+.popUpCity .holderCity span:first-child {
+    border-top: 1px solid #ddd;
+}

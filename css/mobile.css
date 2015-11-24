@@ -1,0 +1,63 @@
+body {
+    min-width: 320px;
+}
+
+.mob_blog {
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: #ea6c36;
+    text-align: center;
+    color: #fffefe;
+    font: 28px / 50px 'robotobold';
+    -webkit-transition: all linear .25s;
+            transition: all linear .25s;
+    cursor: pointer;
+}
+
+.mob_blog:hover {
+    background: #f2895c;
+}
+
+.news_f_k {
+    display: none;
+}
+
+main {
+    width: 100%;
+    padding: 0 16px;
+}
+
+aside {
+    display: none;
+}
+.articles {
+    min-width: 100%;
+}
+.articles .wrapper {
+    width: 100%;
+}
+
+.articles .wrapper .article_m .share_m_a {
+    display: none;
+}
+
+.articles .wrapper .article_m .line_m_a {
+    width: 100%;
+}
+
+.articles .wrapper .article_m .img_m_a {
+    width: 100%;
+}
+
+.articles .wrapper .article_m .img_m_a img {
+    width: 100%;
+}
+
+.articles .wrapper .pages_control .pag_numbers .p_num_mob {
+    display: none;
+}
+
+.articles .wrapper .article_m .line_m_a {
+    width: 100%;
+}

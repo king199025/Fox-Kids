@@ -1,0 +1,77 @@
+var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+jQuery(document).ready(function ($) {
+    if ($('#w_img_f').length == 0) {
+        $('#w_speaker').addClass('w_not_img');
+    }
+    var webinarUrl = location.href,
+        webinarName = $('#name_i_w_p').html();
+    $('#w_soc_share').attr("data-url", webinarUrl).attr("data-title", webinarName);
+
+    $('#scroll_to_form').click(function () {
+        var formPosition = $('#box_c_i_i_w').offset().top;
+        $('html, body').stop().animate({
+            scrollTop: formPosition
+        }, '500', 'swing');
+    });
+
+    $('#arrow_d').click(function () {
+        var listPosition = $('main').offset().top;
+        $('html, body').stop().animate({
+            scrollTop: listPosition
+        }, '500', 'swing');
+    });
+
+    $('#w_send_button').click(function (e) {
+        if (!re.test($('#webinar_email').val())) {
+            $('.w_error').addClass('active');
+            setTimeout(function () {
+                $('.w_error').removeClass('active');
+            }, 3500);
+        }
+        e.preventDefault();
+    });
+
+    $(document).scroll(function () {
+        if ($(document).scrollTop() >= 300) {
+            $('#up_button').addClass('active');
+        } else {
+            $('#up_button').removeClass('active add_bottom');
+        }
+
+        if ($(document).scrollTop() >= $(document).height()-$(window).height()-60) {
+            $('#up_button').addClass('add_bottom');
+        } else {
+            $('#up_button').removeClass('add_bottom');
+        }
+
+        if ($(document).width() < 1000) {
+            return;
+        } else {
+            if ($(document).scrollTop() >= $('.aside_wrapper').height()) {
+                $('.aside_wrapper').addClass('fix_bottom');
+            } else {
+                $('.aside_wrapper').removeClass('fix_bottom');
+            }
+        }
+    });
+
+    $('#up_button').click(function () {
+        $('html, body').stop().animate({
+            scrollTop: 0
+        }, '500', 'swing');
+    });
+    $('#map').click(function () {
+        $('#popUpCity').removeClass('disable');
+    });
+
+    $('#closeCityChoose').click(function () {
+        $('#popUpCity').addClass('disable');
+    });
+
+    $('#popUpCity span').click(function () {
+        $('#map').html($(this).html());
+        $(this).addClass('active').siblings().removeClass('active');
+        $('#popUpCity').addClass('disable');
+    });
+});
