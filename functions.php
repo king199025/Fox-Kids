@@ -93,3 +93,9 @@ register_nav_menus(array(
 ));
 
 
+function printBlog(){
+    $myposts = get_posts(['category'=>3] );
+    $parser = new Parser();
+    $parser->render(TM_DIR . "/views/blog/blog.php", array('post' => $myposts), true);
+}
+add_shortcode('printBlog','printBlog');

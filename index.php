@@ -8,8 +8,10 @@
 </section>
 
 <main>
+
     <section class="articles">
         <div class="wrapper">
+            <?php do_shortcode('[printBlog]');?>
             <article class="article_m">
                 <span class="date">23.10.15</span>
                     <span class="tags">
