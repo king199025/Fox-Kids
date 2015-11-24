@@ -11,11 +11,11 @@ foreach ($post as $p):
                             <span class="t_name_m"><?=$t->name;?></span>,
                         <?php endforeach;?>
                     </span>
-        <a href="<?=$p->guid;?>"><div class="name_m_a"><?=$p->post_title?></div></a>
+        <div class="name_m_a" onclick="location.href='<?=$p->guid;?>'"><?=$p->post_title?></div>
         <div class="text_m_a">
-            <?=$p->post_content;?>
+            <?=get_extended( $p->post_content )['main']; ?>
         </div>
-        <div class="read_more_m_a">Читать подробнее</div>
+        <div class="read_more_m_a" onclick="location.href='<?=$p->guid;?>'">Читать подробнее</div>
         <div class="share_m_a">
             <span class="share_m_a_name">Рассказать друзьям:</span>
             <div class="vk_m_a">

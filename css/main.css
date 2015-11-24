@@ -552,3 +552,7 @@ aside .madeIn a:hover {
         margin: 0;
     }
 }
+
+.name_m_a  {
+    cursor: pointer;
+}

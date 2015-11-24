@@ -12,7 +12,7 @@
     <section class="articles">
         <div class="wrapper">
             <?php do_shortcode('[printBlog]');?>
-            <article class="article_m">
+            <!--<article class="article_m">
                 <span class="date">23.10.15</span>
                     <span class="tags">
                         <span class="ts_m">Теги:</span>
@@ -55,7 +55,7 @@
                     <span class="t_name_m">Но лучше с ними не усердствовать</span>
                     </span>
                 <div class="name_m_a">Уроки вежливости для самых маленьких</div>
-                <a href="" class="img_m_a"><img src="<?=get_template_directory_uri()?>/images/article_previews/img_1.png" alt=""></a>
+                <a href="" class="img_m_a"><img src="<?/*=get_template_directory_uri()*/?>/images/article_previews/img_1.png" alt=""></a>
                 <div class="text_m_a">
                     Малыши берут пример с взрослых и буквально впитывают все, что слышат и видят. Воспользуйтесь этим, чтобы познакомить ребенка с вежливостью и хорошими манерами! &laquo;Волшебные слова&raquo; Научить малыша &laquo;волшебным словам&raquo; &#8212; это пожалуй, один из самых...
                 </div>
@@ -120,7 +120,7 @@
                     <span class="t_name_m">Но лучше с ними не усердствовать</span>
                     </span>
                 <div class="name_m_a">Уроки вежливости для самых маленьких</div>
-                <a href="" class="img_m_a"><img src="<?=get_template_directory_uri()?>/images/article_previews/img_1.png" alt=""></a>
+                <a href="" class="img_m_a"><img src="<?/*=get_template_directory_uri()*/?>/images/article_previews/img_1.png" alt=""></a>
                 <div class="text_m_a">
                     Малыши берут пример с взрослых и буквально впитывают все, что слышат и видят. Воспользуйтесь этим, чтобы познакомить ребенка с вежливостью и хорошими манерами! &laquo;Волшебные слова&raquo; Научить малыша &laquo;волшебным словам&raquo; &#8212; это пожалуй, один из самых...
                 </div>
@@ -185,7 +185,7 @@
                     <span class="t_name_m">Но лучше с ними не усердствовать</span>
                     </span>
                 <div class="name_m_a">Уроки вежливости для самых маленьких</div>
-                <a href="" class="img_m_a"><img src="<?=get_template_directory_uri()?>/images/article_previews/img_1.png" alt=""></a>
+                <a href="" class="img_m_a"><img src="<?/*=get_template_directory_uri()*/?>/images/article_previews/img_1.png" alt=""></a>
                 <div class="text_m_a">
                     Малыши берут пример с взрослых и буквально впитывают все, что слышат и видят. Воспользуйтесь этим, чтобы познакомить ребенка с вежливостью и хорошими манерами! &laquo;Волшебные слова&raquo; Научить малыша &laquo;волшебным словам&raquo; &#8212; это пожалуй, один из самых...
                 </div>
@@ -250,7 +250,7 @@
                     <span class="t_name_m">Но лучше с ними не усердствовать</span>
                     </span>
                 <div class="name_m_a">Уроки вежливости для самых маленьких</div>
-                <a href="" class="img_m_a"><img src="<?=get_template_directory_uri()?>/images/article_previews/img_1.png" alt=""></a>
+                <a href="" class="img_m_a"><img src="<?/*=get_template_directory_uri()*/?>/images/article_previews/img_1.png" alt=""></a>
                 <div class="text_m_a">
                     Малыши берут пример с взрослых и буквально впитывают все, что слышат и видят. Воспользуйтесь этим, чтобы познакомить ребенка с вежливостью и хорошими манерами! &laquo;Волшебные слова&raquo; Научить малыша &laquo;волшебным словам&raquo; &#8212; это пожалуй, один из самых...
                 </div>
@@ -271,7 +271,7 @@
                     </div>
                 </div>
                 <div class="line_m_a"></div>
-            </article>
+            </article>-->
             <section class="pages_control">
                 <div class="load_more">Загрузить еще</div>
                 <div class="pag_numbers">

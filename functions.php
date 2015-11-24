@@ -15,6 +15,7 @@ function add_style(){
     wp_enqueue_style( 'likely', get_template_directory_uri() . '/css/likely.css', array(), '1');
     wp_enqueue_style( 'main', get_template_directory_uri() . '/css/main.css', array(), '1');
     wp_enqueue_style( 'reset', get_template_directory_uri() . '/css/reset.css', array(), '1');
+    wp_enqueue_style( 'font', get_template_directory_uri() . '/css/font/font.css', array(), '1');
     /*wp_enqueue_style( 'mobile-header-footer', get_template_directory_uri() . '/css/mobile-header-footer.css', array(), '1');*/
 }
 
