@@ -17,6 +17,8 @@ function add_style(){
     wp_enqueue_style( 'reset', get_template_directory_uri() . '/css/reset.css', array(), '1');
     wp_enqueue_style( 'font', get_template_directory_uri() . '/css/font/font.css', array(), '1');
     /*wp_enqueue_style( 'mobile-header-footer', get_template_directory_uri() . '/css/mobile-header-footer.css', array(), '1');*/
+    /*wp_enqueue_style( 'inner', get_template_directory_uri() . '/css/inner.css', array(), '1');*/
+
 }
 
 function add_script(){
@@ -59,24 +61,24 @@ function prn($content) {
     echo '</pre>';
 }
 
-function my_pagenavi() {
+function wp_corenavi() {
     global $wp_query;
+    $pages = '';
+    $max = $wp_query->max_num_pages;
+    if (!$current = get_query_var('paged')) $current = 1;
+    $a['base'] = str_replace(999999999, '%#%', get_pagenum_link(999999999));
+    $a['total'] = $max;
+    $a['current'] = $current;
+    $total = 1; //1 - выводить текст "Страница N из N", 0 - не выводить
+    $a['mid_size'] = 3; //сколько ссылок показывать слева и справа от текущей
+    $a['end_size'] = 1; //сколько ссылок показывать в начале и в конце
+    $a['prev_text'] = '&laquo;'; //текст ссылки "Предыдущая страница"
+    $a['next_text'] = '&raquo;'; //текст ссылки "Следующая страница"
 
-    $big = 999999999; // уникальное число для замены
-
-    $args = array(
-        'base' => str_replace( $big, '%#%', get_pagenum_link( $big ) )
-    ,'format' => ''
-    ,'current' => max( 1, get_query_var('paged') )
-    ,'total' => $wp_query->max_num_pages
-    );
-
-    $result = paginate_links( $args );
-
-    // удаляем добавку к пагинации для первой страницы
-    $result = str_replace( '/page/1/', '', $result );
-
-    echo $result;
+    if ($max > 1) echo '<div class="navigation">';
+    if ($total == 1 && $max > 1) $pages = '<span class="pages">Страница ' . $current . ' из ' . $max . '</span>'."\r\n";
+    echo $pages . paginate_links($a);
+    if ($max > 1) echo '</div>';
 }
 
 function excerpt_readmore($more) {
@@ -93,10 +95,43 @@ register_nav_menus(array(
     'header_menu' => 'Верхнее меню',
 ));
 
+function my_pagenavi($recent) {
+    global $wp_query;
+   /* $i = 0;
+    foreach($wp_query->posts as $post){
+        $cat = get_the_category( $post->ID );
+        if($cat[0]->name == 'Блог'){
+            $i++;
+        }
+    }*/
+    $big = 999999999; // уникальное число для замены
 
-function printBlog(){
-    $myposts = get_posts(['category'=>3] );
-    $parser = new Parser();
-    $parser->render(TM_DIR . "/views/blog/blog.php", array('post' => $myposts), true);
+    $args = array(
+        'base' => '?page=%_%',
+        'format' => '%#%',
+        'total' => $recent->max_num_pages,
+        'show_all' => TRUE,
+        'current' => (isset($_GET['page'])) ? $_GET['page'] : 1,
+        'end_size' => 1,
+        'mid_size' => 2,
+        'prev_next' => False,
+        'type' => 'array',
+        'add_args' => False,
+        'add_fragment' => '',
+        'before_page_number' => '',
+        'after_page_number' => ''
+    );
+    $result = paginate_links($args);
+
+    if( is_array( $result ) ) {
+       // $paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
+        echo '<div class="pag_numbers">';
+        foreach ( $result as $page ) {
+            echo '<span class="p_num">'.$page.'</span>';
+        }
+        echo '</div>';
+    }
+    // удаляем добавку к пагинации для первой страницы
+    //$result = str_replace( '/page/1/', '', $result );
+
 }
-add_shortcode('printBlog','printBlog');

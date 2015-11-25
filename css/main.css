@@ -513,7 +513,7 @@ aside .madeIn a:hover {
     cursor: default;
 }
 
-.articles .wrapper .pages_control .pag_numbers .p_num {
+.articles .wrapper .pages_control .pag_numbers .p_num a {
     padding: 0 8px;
     white-space: nowrap;
     display: inline-block;
@@ -522,14 +522,23 @@ aside .madeIn a:hover {
     -webkit-transition: all linear .25s;
     transition: all linear .25s;
     font: 16px / 16px 'robotobold';
+    text-decoration:none;
 }
 
-.articles .wrapper .pages_control .pag_numbers .p_num:hover {
+.articles .wrapper .pages_control .pag_numbers .p_num a:hover {
     color: #ea6c36;
 }
 
-.articles .wrapper .pages_control .pag_numbers .p_num.active {
+.articles .wrapper .pages_control .pag_numbers .p_num .page-numbers.current {
     color: #ea6c36;
+    padding: 0 8px;
+    white-space: nowrap;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-transition: all linear .25s;
+    transition: all linear .25s;
+    font: 16px / 16px 'robotobold';
+    text-decoration:none;
 }
 
 @media screen and (max-width: 1000px) {

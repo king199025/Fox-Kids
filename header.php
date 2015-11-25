@@ -20,7 +20,7 @@
 	<div class="number"><span>+7 (3532) 45-18-17</span></div>
 	<div class="map" id="map">Оренбург</div>
 	<nav class="pc_menu">
-		<ul>
+		<!--<ul>
 			<li class="active"><a href="">Новости</a></li>
 			<li><a href="">Статьи</a></li>
 			<li><a href="">Вебинары</a></li>
@@ -29,12 +29,11 @@
 			<li><a href="">Программа</a></li>
 			<li><a href="">Меню</a></li>
 			<li><a href="">Контакты</a></li>
-		</ul>
+		</ul>-->
 		<?php
 		wp_nav_menu( array(
 			'menu_class'=>'menu',
-			'theme_location'=>'top',
-			'after'=>' /'
+			'theme_location'=>'header_menu'
 		) );
 		?>
 	</nav>

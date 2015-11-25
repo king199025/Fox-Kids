@@ -143,11 +143,11 @@ header nav.pc_menu ul li:hover a {
     color: #fff;
 }
 
-header nav.pc_menu ul li.active {
+header nav.pc_menu ul li.current-menu-item {
     background: #ea6c36;
 }
 
-header nav.pc_menu ul li.active a {
+header nav.pc_menu ul li.current-menu-item a {
     color: #fff;
 }
 
