@@ -6,33 +6,23 @@ define('TM_URL', get_template_directory_uri(__FILE__));
 require_once TM_DIR . '/lib/Parser.php';
 
 function add_style(){
-    /*wp_enqueue_style( 'my-bootstrap-extension', get_template_directory_uri() . '/css/bootstrap.css', array(), '1');
-    wp_enqueue_style( 'my-styles', get_template_directory_uri() . '/css/style.css', array('my-bootstrap-extension'), '1');
-    wp_enqueue_style( 'my-sass', get_template_directory_uri() . '/sass/style.css', array('my-bootstrap-extension'), '1');
-    wp_enqueue_style( 'fotorama', get_template_directory_uri() . '/css/fotorama.css', array('my-bootstrap-extension'), '1');*/
+    wp_enqueue_style( 'reset', get_template_directory_uri() . '/css/reset.css', array(), '1');
     wp_enqueue_style( 'footer', get_template_directory_uri() . '/css/footer.css', array(), '1');
     wp_enqueue_style( 'header', get_template_directory_uri() . '/css/header.css', array(), '1');
     wp_enqueue_style( 'likely', get_template_directory_uri() . '/css/likely.css', array(), '1');
     wp_enqueue_style( 'main', get_template_directory_uri() . '/css/main.css', array(), '1');
-    wp_enqueue_style( 'reset', get_template_directory_uri() . '/css/reset.css', array(), '1');
     wp_enqueue_style( 'font', get_template_directory_uri() . '/css/font/font.css', array(), '1');
-    /*wp_enqueue_style( 'mobile-header-footer', get_template_directory_uri() . '/css/mobile-header-footer.css', array(), '1');*/
-    /*wp_enqueue_style( 'inner', get_template_directory_uri() . '/css/inner.css', array(), '1');*/
+    wp_enqueue_style( 'inner', get_template_directory_uri() . '/css/inner.css', array(), '1');
 
 }
 
 function add_script(){
     wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery.min.js', array(), '1');
     wp_enqueue_script( 'jq', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js', array(), '1');
-    /*wp_enqueue_script( 'my-bootstrap-extension', get_template_directory_uri() . '/js/bootstrap.js', array(), '1');*/
     wp_enqueue_script( 'my-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1');
-    /*wp_enqueue_script( 'fotorama-js', get_template_directory_uri() . '/js/fotorama.js', array(), '1');*/
-
-
     wp_enqueue_script( 'likely', get_template_directory_uri() . '/js/likely.js', array(), '1');
-
     wp_enqueue_script( 'mobile_script', get_template_directory_uri() . '/js/mobile_script.js', array(), '1');
-    wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');
+    /*wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');*/
     wp_enqueue_script( 'parallax', get_template_directory_uri() . '/js/parallax.js', array(), '1');
     wp_enqueue_script( 'newParallax', get_template_directory_uri() . '/js/newParallax.js', array(), '1');
     wp_localize_script('jquery', 'myajax',
@@ -134,4 +124,87 @@ function my_pagenavi($recent) {
     // удаляем добавку к пагинации для первой страницы
     //$result = str_replace( '/page/1/', '', $result );
 
+}
+
+add_action('customize_register', function($customizer){
+    /*Меню настройки контактов*/
+    $customizer->add_section(
+        'contacts_section',
+        array(
+            'title' => 'Настройки контактов',
+            'description' => 'Контакты',
+            'priority' => 35,
+        )
+    );
+
+    $customizer->add_setting(
+        'mail_textbox',
+        array('default' => 'info@foxandkids.ru')
+    );
+
+    $customizer->add_setting(
+        'mail_textbox_delivery',
+        array('default' => 'info@foxandkids.ru')
+    );
+
+    $customizer->add_setting(
+        'phone_textbox',
+        array('default' => '+7 (3532) 45-18-17')
+    );
+
+    $customizer->add_control(
+        'mail_textbox',
+        array(
+            'label' => 'Email',
+            'section' => 'contacts_section',
+            'type' => 'text',
+        )
+    );
+    $customizer->add_control(
+        'mail_textbox_delivery',
+        array(
+            'label' => 'Email для рассылок',
+            'section' => 'contacts_section',
+            'type' => 'text',
+        )
+    );
+    $customizer->add_control(
+        'phone_textbox',
+        array(
+            'label' => 'Телефон',
+            'section' => 'contacts_section',
+            'type' => 'text',
+        )
+    );
+
+    $customizer->add_section(
+        'logo_section',
+        array(
+            'title' => 'Логотип',
+            'description' => 'Логотип',
+            'priority' => 35,
+        )
+    );
+    $customizer->add_setting(
+        'logo_textbox'
+    );
+    $customizer->add_control(
+        new WP_Customize_Image_Control(
+            $customizer,
+            'logo',
+            array(
+                'label' => __( 'Upload a logo', 'theme_name' ),
+                'section' => 'logo_section',
+                'settings' => 'logo_textbox'
+            )
+        )
+    );
+});
+
+add_action('wp_ajax_delivery', 'delivery');
+add_action('wp_ajax_nopriv_delivery', 'delivery');
+
+function delivery(){
+    mail(get_theme_mod('mail_textbox_delivery'),'Подписка на рассылку','email - '.$_POST['email']);
+    die();
 }

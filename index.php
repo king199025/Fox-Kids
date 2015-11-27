@@ -7,7 +7,7 @@
     <div class="f_k_a_d f_k_op" id="arrow_d"></div>
 </section>
 
-<main>
+<main class="home-container">
 
     <section class="articles">
         <div class="wrapper">
@@ -27,12 +27,10 @@
 
                 <article class="article_m">
                     <span class="date"><?=date('d-m-Y', strtotime($post->post_date));?></span>
-                    <?php $tag = wp_get_post_tags($post->ID);?>
+
                     <span class="tags">
                         <span class="ts_m">Теги:</span>
-                        <?php foreach($tag as $t):?>
-                            <span class="t_name_m"><?=$t->name;?></span>,
-                        <?php endforeach;?>
+                        <?php the_tags('<span class="t_name_m">','</span>, <span class="t_name_m">','</span>');?>
                     </span>
                     <div class="name_m_a" onclick="location.href='<?=$post->guid;?>'"><?=$post->post_title?></div>
                     <a href="" class="img_m_a"><?=get_the_post_thumbnail($post->ID);?></a>

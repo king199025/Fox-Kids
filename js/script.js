@@ -74,4 +74,15 @@ jQuery(document).ready(function ($) {
         $(this).addClass('active').siblings().removeClass('active');
         $('#popUpCity').addClass('disable');
     });
+
+    $('#mail_delivery').on('click',function(){
+        $.ajax({
+            url: myajax, //url, к которому обращаемся
+            type: "POST",
+            data: "action=delivery&email=" + $('#subscribe').val(),
+            success: function(data){
+                $('.subscribe_inner').html('<span class="textDelivery">Спасибо, ваша заявка принята!</span>');
+            }
+        });
+    });
 });

@@ -12,12 +12,12 @@
 
 <body>
 <header class="page_with_mob_name">
-	<a href="" class="logo"><img src="<?=get_template_directory_uri()?>/images/logo.png" alt=""></a>
+	<a href="/" class="logo"><img src="<?php echo get_theme_mod('logo_section'); ?>" alt=""></a>
 	<div class="buttons">
 		<div class="first_lesson">Пробный урок</div>
 		<div class="franchise">Франшиза Fox&amp;Kids</div>
 	</div>
-	<div class="number"><span>+7 (3532) 45-18-17</span></div>
+	<div class="number"><span><?php echo get_theme_mod('phone_textbox'); ?></span></div>
 	<div class="map" id="map">Оренбург</div>
 	<nav class="pc_menu">
 		<!--<ul>
@@ -48,7 +48,7 @@
 		Меню
 	</div>
 	<nav class="mobile_menu">
-		<ul>
+		<!--<ul>
 			<li><a href="">Блог</a></li>
 			<li><a href="">Статьи</a></li>
 			<li><a href="">Вебинары</a></li>
@@ -56,6 +56,12 @@
 			<li><a href="">3D-тур</a></li>
 			<li><a href="">Программа</a></li>
 			<li><a href="">Контакты</a></li>
-		</ul>
+		</ul>-->
+		<?php
+		wp_nav_menu( array(
+			'menu_class'=>'menu',
+			'theme_location'=>'header_menu'
+		) );
+		?>
 	</nav>
 </header>

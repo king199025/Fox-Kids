@@ -10,8 +10,13 @@ body {
 
 /*===Main Wrapper===*/
 
-main {
+/*main {
     width: 720px;
+    margin: 42px auto 70px auto;
+}*/
+main.page-container {
+    width: 720px;
+    display: block;
     margin: 42px auto 70px auto;
 }
 
@@ -41,9 +46,10 @@ main {
     color: #999;
 }
 
-.main_article .date_tags .tags .t_name_m_m {
+.main_article .date_tags .tags .t_name_m_m a{
     color: #ea6c36;
     cursor: pointer;
+    text-decoration:none;
 }
 
 .main_article .tags:before {
@@ -217,8 +223,9 @@ main {
     top: 4px;
 }
 
-.e_articles_inner .e_a_i_wrapper .article_m .tags .t_name_m {
+.e_articles_inner .e_a_i_wrapper .article_m .tags .t_name_m a{
     color: #ea6c36;
+    text-decoration:none;
 }
 
 .e_articles_inner .e_a_i_wrapper .article_m .name_m_a {
@@ -311,4 +318,14 @@ main {
     height: 1px;
     background: rgba(0, 0, 0, .1);
     margin-top: 32px;
+}
+
+span.textDelivery{
+    font-family: "iskrabold";
+    display: block;
+    font-size: 18px;
+    color: #999999;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
 }

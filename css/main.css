@@ -59,7 +59,7 @@ body {
 
 /*===Main===*/
 
-main {
+main.home-container {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -385,8 +385,9 @@ aside .madeIn a:hover {
     top: 4px;
 }
 
-.articles .wrapper .article_m .tags .t_name_m {
+.articles .wrapper .article_m .tags .t_name_m a{
     color: #ea6c36;
+    text-decoration: none;
 }
 
 .articles .wrapper .article_m .name_m_a {

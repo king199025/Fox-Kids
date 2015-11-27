@@ -1,3 +1,30 @@
+<?php
+if ( is_home() ) {
+
+} else {?>
+	<footer>
+		<div class="cont_company">
+			<div class="c_c_group">&copy; ООО &laquo;ФоксГруп&raquo;, 2015</div>
+			<div class="c_c_m"><a href=""><?php echo get_theme_mod('mail_textbox'); ?></a></div>
+		</div>
+		<ul class="f_nav">
+
+			<?php
+			wp_nav_menu( array(
+				'menu_class'=>'menu',
+				'theme_location'=>'header_menu'
+			) );
+			?>
+		</ul>
+		<div class="made_in">
+			<div class="m_i">Сайт разработан в</div>
+			<div class="m_i_name"><a href="">Бренд-бюро</a></div>
+		</div>
+	</footer>
+	<?php
+
+}
+?>
 <div class="popUpCity disable" id="popUpCity">
 	<div class="bold">Укажите Ваш город:</div>
 	<div class="close" id="closeCityChoose"></div>
@@ -13,6 +40,17 @@
 </div>
 
 <?php wp_footer(); ?>
+
+<script type="text/javascript">
+	addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
+	var myajax = '/wp-admin/admin-ajax.php',
+		pagenow = 'toplevel_page_mainpage',
+		typenow = '',
+		adminpage = 'toplevel_page_mainpage',
+		thousandsSeparator = ' ',
+		decimalPoint = ',',
+		isRtl = 0;
+</script>
 
 </body>
 </html>
