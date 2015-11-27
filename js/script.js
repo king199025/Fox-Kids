@@ -85,4 +85,10 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    $('.page_item').on('click', function(){
+        var a = $(this).children();
+        var link = a.attr('href');
+        document.location.href = link;
+    });
 });

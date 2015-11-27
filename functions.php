@@ -22,7 +22,7 @@ function add_script(){
     wp_enqueue_script( 'my-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1');
     wp_enqueue_script( 'likely', get_template_directory_uri() . '/js/likely.js', array(), '1');
     wp_enqueue_script( 'mobile_script', get_template_directory_uri() . '/js/mobile_script.js', array(), '1');
-    /*wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');*/
+    wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');
     wp_enqueue_script( 'parallax', get_template_directory_uri() . '/js/parallax.js', array(), '1');
     wp_enqueue_script( 'newParallax', get_template_directory_uri() . '/js/newParallax.js', array(), '1');
     wp_localize_script('jquery', 'myajax',
