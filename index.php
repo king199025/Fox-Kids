@@ -65,7 +65,16 @@
             </section>
         </div>
     </section>
-    <? get_sidebar();?>
+    <aside>
+        <div class="aside_wrapper">
+    <?php if ( is_active_sidebar( 'main_sidebar' ) ) : ?>
+            <?php dynamic_sidebar( 'main_sidebar' ); ?>
+    <?php endif; ?>
+
+    <div class="madeIn">Сайт разработан в <a href="">бренд-бюро</a></div>
+    </div>
+    </aside>
+    <? /*get_sidebar();*/?>
 </main>
 
 <?php get_footer(); ?>

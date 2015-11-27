@@ -13,7 +13,7 @@ function add_style(){
     wp_enqueue_style( 'main', get_template_directory_uri() . '/css/main.css', array(), '1');
     wp_enqueue_style( 'font', get_template_directory_uri() . '/css/font/font.css', array(), '1');
     wp_enqueue_style( 'inner', get_template_directory_uri() . '/css/inner.css', array(), '1');
-
+    wp_enqueue_style( 'istyle', get_template_directory_uri() . '/css/istyle.css', array(), '1');
 }
 
 function add_script(){
@@ -208,3 +208,385 @@ function delivery(){
     mail(get_theme_mod('mail_textbox_delivery'),'Подписка на рассылку','email - '.$_POST['email']);
     die();
 }
+
+/*---------------------------------САЙДБАР--------------------------------------------*/
+/*КАСТОМНЫЕ ПОСТЫ АНОНСЫ*/
+add_action('save_post', 'myExtraFieldsUpdate', 10, 1);
+
+/* Сохраняем данные, при сохранении поста */
+function myExtraFieldsUpdate($post_id)
+{
+    if (!isset($_POST['extra'])) return false;
+    foreach ($_POST['extra'] as $key => $value) {
+        if (empty($value)) {
+            delete_post_meta($post_id, $key); // удаляем поле если значение пустое
+            continue;
+        }
+
+        update_post_meta($post_id, $key, $value); // add_post_meta() работает автоматически
+    }
+    return $post_id;
+}
+add_action('init', 'myCustomInitAnounce');
+function myCustomInitAnounce()
+{
+    $labels = array(
+        'name' => 'Анонсы', // Основное название типа записи
+        'singular_name' => 'Анонс', // отдельное название записи типа Book
+        'add_new' => 'Добавить анонс',
+        'add_new_item' => 'Добавить новый анонс',
+        'edit_item' => 'Редактировать анонс',
+        'new_item' => 'Новый анонс',
+        'view_item' => 'Посмотреть анонс',
+        'search_items' => 'Найти анонс',
+        'not_found' => 'Анонсов не найдено',
+        'not_found_in_trash' => 'В корзине анонсов не найдено',
+        'parent_item_colon' => '',
+        'menu_name' => 'Анонсы'
+
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'query_var' => true,
+        'rewrite' => true,
+        'capability_type' => 'post',
+        'has_archive' => true,
+        'hierarchical' => false,
+        'menu_position' => null,
+        'supports' => array('title','thumbnail','editor')
+    );
+    register_post_type('anounces', $args);
+}
+
+function extraFieldsLink($post)
+{
+    ?>
+    <p>
+        <span>Ссылка на анонс: </span>
+        <input type="text" name='extra[link]' value="<?php echo get_post_meta($post->ID, "link", 1); ?>">
+    </p>
+    <?php
+}
+
+function myExtraFieldsAnounce()
+{
+    add_meta_box('extra_link', 'Link', 'extraFieldsLink', 'anounces', 'normal', 'high');
+}
+
+add_action('add_meta_boxes', 'myExtraFieldsAnounce', 1);
+/* В боковой колонке*/
+register_sidebar(
+    array(
+        'id' => 'main_sidebar', // уникальный id
+        'name' => 'Боковая колонка', // название сайдбара
+        'description' => 'Перетащите сюда виджеты, чтобы добавить их в сайдбар.', // описание
+        'before_widget' => '<div class="widget-block">', // по умолчанию виджеты выводятся <li>-списком
+        'after_widget' => '</div>',
+        'before_title' => '<div class="widget-title">', // по умолчанию заголовки виджетов в <h2>
+        'after_title' => '</div>'
+    )
+);
+
+/*Создаем виджет*/
+/**/
+class Anounce_Widget extends WP_Widget{
+    function __construct() {
+        parent::__construct(
+            'anounce_widget', // Base ID
+            'Анонсы', // Name
+            array('description' => __( 'Показывает последние анонсы. Выводит картинку, текст и кнопку с ссылкой на событие'))
+        );
+    }
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['numberOfListings'] = strip_tags($new_instance['numberOfListings']);
+        return $instance;
+    }
+    function form($instance) {
+        if( $instance) {
+            $title = esc_attr($instance['title']);
+            $numberOfListings = esc_attr($instance['numberOfListings']);
+        } else {
+            $title = '';
+            $numberOfListings = '';
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Заголовок виджета', 'anounce_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('numberOfListings'); ?>"><?php _e('Количество записей:', 'anounce_widget'); ?></label>
+            <select id="<?php echo $this->get_field_id('numberOfListings'); ?>"  name="<?php echo $this->get_field_name('numberOfListings'); ?>">
+                <?php for($x=1;$x<=10;$x++): ?>
+                    <option <?php echo $x == $numberOfListings ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
+                <?php endfor;?>
+            </select>
+        </p>
+        <?php
+    }
+    function widget($args, $instance) {
+        extract( $args );
+        $title = apply_filters('widget_title', $instance['title']);
+        $numberOfListings = $instance['numberOfListings'];
+        //echo $before_widget;
+        if ( $title ) {
+            echo $title;
+        }
+        $this->getAnounceListings($numberOfListings);
+        //echo $after_widget;
+    }
+    function getAnounceListings($numberOfListings) { //html
+        global $post;
+        add_image_size( 'anounce_widget_size', 85, 45, false );
+        $listings = new WP_Query();
+        $listings->query('post_type=anounces&posts_per_page=' . $numberOfListings );
+        if($listings->found_posts > 0) {
+            //echo '<ul class="anounce_widget">';
+            while ($listings->have_posts()) {
+                $listings->the_post();
+
+                $listItem = '<article class="aside_a">';
+                $listItem .= '<div class="name_a_a">'.get_the_title() . '</div>';
+                $listItem .= '<div class="img_a_a">'.get_the_post_thumbnail($post->ID, 'anounce_widget_size').'</div>';
+                $listItem .= ' <div class="text_a_a">'.get_the_content().'</div>';
+                $listItem .= '<a href="' . get_post_meta($post->ID, "link", 1) . '"><div class="button_a_a">Узнать подробнее</div></a></article>';
+
+                echo $listItem;
+            }
+            //echo '</ul>';
+            wp_reset_postdata();
+        }else{
+            echo '';
+        }
+    }
+} //end class Anounce_Widget
+register_widget('Anounce_Widget');
+/**/
+/**/
+class Contacts_Widget extends WP_Widget{
+    function __construct() {
+        parent::__construct(
+            'contacts_widget', // Base ID
+            'Контакты', // Name
+            array('description' => __( 'Показывает контакты. Выводит адрес и телефон'))
+        );
+    }
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['phone'] = strip_tags($new_instance['phone']);
+        $instance['address'] = strip_tags($new_instance['address']);
+        return $instance;
+    }
+    function form($instance) {
+        if( $instance) {
+            $phone = esc_attr($instance['phone']);
+            $address = esc_attr($instance['address']);
+        } else {
+            $phone = '';
+            $address = '';
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('phone'); ?>"><?php _e('Телефон', 'contact_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('phone'); ?>" name="<?php echo $this->get_field_name('phone'); ?>" type="text" value="<?php echo $phone; ?>" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('address'); ?>"><?php _e('Адрес', 'contact_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('address'); ?>" name="<?php echo $this->get_field_name('address'); ?>" type="text" value="<?php echo $address; ?>" />
+        </p>
+        <?php
+    }
+    function widget($args, $instance) {
+        extract( $args );
+        $phone = apply_filters('widget_phone', $instance['phone']);
+        $address = $instance['address'];
+        echo '<div class="contacts_a">';
+        if ( $phone ) {
+            echo '<div class="number_a">'. $phone .'</div>';
+        }
+        if ( $address ) {
+            echo '<div class="mail_a">'. $address .'</div>';
+        }
+        echo '</div><div class="line_a"></div>';
+    }
+} //end class Anounce_Widget
+register_widget('Contacts_Widget');
+/**/
+/**/
+class Social_Widget extends WP_Widget{
+    function __construct() {
+        parent::__construct(
+            'Social_widget', // Base ID
+            'Социальные сети', // Name
+            array('description' => __( 'Показывает соц сети. Выводит соц сети'))
+        );
+    }
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['fb'] = strip_tags($new_instance['fb']);
+        $instance['ok'] = strip_tags($new_instance['ok']);
+        $instance['vk'] = strip_tags($new_instance['vk']);
+        return $instance;
+    }
+    function form($instance) {
+        if( $instance) {
+            $fb = esc_attr($instance['fb']);
+            $ok = esc_attr($instance['ok']);
+            $vk = esc_attr($instance['vk']);
+        } else {
+            $fb = '';
+            $ok = '';
+            $vk = '';
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('fb'); ?>"><?php _e('Facebook', 'social_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('fb'); ?>" name="<?php echo $this->get_field_name('fb'); ?>" type="text" value="<?php echo $fb; ?>" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('ok'); ?>"><?php _e('Одноклассники', 'social_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('ok'); ?>" name="<?php echo $this->get_field_name('ok'); ?>" type="text" value="<?php echo $ok; ?>" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('vk'); ?>"><?php _e('Вконтакте', 'social_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('vk'); ?>" name="<?php echo $this->get_field_name('vk'); ?>" type="text" value="<?php echo $vk; ?>" />
+        </p>
+        <?php
+    }
+    function widget($args, $instance) {
+        extract( $args );
+        $fb = apply_filters('widget_fb', $instance['fb']);
+        $ok = apply_filters('widget_ok', $instance['ok']);
+        $vk = apply_filters('widget_vk', $instance['vk']);
+
+       // echo $before_widget;
+
+        echo '<div class="social_a">';
+
+        if ( $fb ) {
+            echo '<a href="'.$fb.'"><div class="soc_a fb_a"></div></a>';
+        }
+
+        if ( $ok ) {
+            echo '<a href="'.$ok.'"><div class="soc_a od_a"></div></a>';
+        }
+
+        if ( $vk ) {
+            echo '<a href="'.$vk.'"><div class="soc_a vk_a"></div></a>';
+        }
+
+        echo '</div>';
+       // echo $after_widget;
+    }
+} //end class Anounce_Widget
+register_widget('Social_Widget');
+/**/
+/**/
+class Tags_Widget extends WP_Widget{
+    function __construct() {
+        parent::__construct(
+            'tags_widget', // Base ID
+            'Популярные теги', // Name
+            array('description' => __( 'Показывает 8 популярных тегов.'))
+        );
+    }
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        return $instance;
+    }
+    function form($instance) {
+        if( $instance) {
+            $title = esc_attr($instance['title']);
+        } else {
+            $title = '';
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Заголовок виджета', 'tags_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+        </p>
+        <?php
+    }
+    function widget($args, $instance) {
+        extract( $args );
+        $title = apply_filters('widget_title', $instance['title']);
+        echo '<div class="pop_tags">';
+        if ( $title ) {
+            echo '<div class="pop_tags_name">'.$title.'</div>';
+        }
+        $this->getPopularTags();
+        echo '</div>';
+    }
+    function getPopularTags() { //html
+       // global $post;
+        $params = array(
+            'orderby' => 'count',
+            'number' => 8,
+            'order' => 'DESC'
+        );
+
+        $tags = get_tags($params);
+        echo '<ul class="b_w_tags">';
+        foreach ($tags as $tag) :
+            echo '<li><a href="'.get_tag_link($tag->term_id).'"></a>'.$tag->name.'</li>';
+        endforeach;
+        echo '</ul>';
+    }
+} //end class Tags_Widget
+register_widget('Tags_Widget');
+/**/
+/**/
+class Lesson_Widget extends WP_Widget{
+    function __construct() {
+        parent::__construct(
+            'lesson_widget', // Base ID
+            'Урок', // Name
+            array('description' => __( 'Выводит ссылку для урока'))
+        );
+    }
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['link'] = strip_tags($new_instance['link']);
+        return $instance;
+    }
+    function form($instance) {
+        if( $instance) {
+            $title = esc_attr($instance['title']);
+            $link = esc_attr($instance['link']);
+        } else {
+            $title = '';
+            $link = '';
+        }
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Заголовок', 'lesson_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Ссылка', 'lesson_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('link'); ?>" name="<?php echo $this->get_field_name('link'); ?>" type="text" value="<?php echo $link; ?>" />
+        </p>
+        <?php
+    }
+    function widget($args, $instance) {
+        extract( $args );
+        $title = apply_filters('widget_title', $instance['title']);
+        $link = $instance['link'];
+        echo '<div class="enroll_a">';
+        if ( $title && $link) {
+            echo '<div class="number_a"><a href="'.$link.'">'. $title .'</a></div>';
+        }
+        echo '</div>';
+    }
+} //end class Lesson_Widget
+register_widget('Lesson_Widget');
+/**/
+/*----------------------------КОНЕЦ САЙДБАР-------------------------------------------*/
