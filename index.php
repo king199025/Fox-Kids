@@ -61,7 +61,7 @@
 
             <section class="pages_control">
                 <div class="load_more">Загрузить еще</div>
-                <?=  my_pagenavi($recent); ?>
+                <?php my_pagenavi($recent); ?>
             </section>
         </div>
     </section>

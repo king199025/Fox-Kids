@@ -13,6 +13,8 @@ function add_style(){
     wp_enqueue_style( 'main', get_template_directory_uri() . '/css/main.css', array(), '1');
     wp_enqueue_style( 'font', get_template_directory_uri() . '/css/font/font.css', array(), '1');
     wp_enqueue_style( 'inner', get_template_directory_uri() . '/css/inner.css', array(), '1');
+    wp_enqueue_style( 'webinar', get_template_directory_uri() . '/css/webinar.css', array(), '1');
+    wp_enqueue_style( 'inner_webinar', get_template_directory_uri() . '/css/inner_webinar.css', array(), '1');
 
 }
 
@@ -22,7 +24,7 @@ function add_script(){
     wp_enqueue_script( 'my-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1');
     wp_enqueue_script( 'likely', get_template_directory_uri() . '/js/likely.js', array(), '1');
     wp_enqueue_script( 'mobile_script', get_template_directory_uri() . '/js/mobile_script.js', array(), '1');
-    /*wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');*/
+    wp_enqueue_script( 'device', get_template_directory_uri() . '/js/device.js', array(), '1');
     wp_enqueue_script( 'parallax', get_template_directory_uri() . '/js/parallax.js', array(), '1');
     wp_enqueue_script( 'newParallax', get_template_directory_uri() . '/js/newParallax.js', array(), '1');
     wp_localize_script('jquery', 'myajax',
@@ -207,4 +209,135 @@ add_action('wp_ajax_nopriv_delivery', 'delivery');
 function delivery(){
     mail(get_theme_mod('mail_textbox_delivery'),'Подписка на рассылку','email - '.$_POST['email']);
     die();
+}
+
+
+
+/**********Вебинары*********/
+add_action('init', 'webinar_custom_init');
+function webinar_custom_init()
+{
+    $labels = array(
+        'name' => 'Вебинары', // Основное название типа записи
+        'singular_name' => 'Вебинар', // отдельное название записи типа Book
+        'add_new' => 'Добавить вебинар',
+        'add_new_item' => 'Добавить новый вебинар',
+        'edit_item' => 'Редактировать вебинар',
+        'new_item' => 'Новый вебинар',
+        'view_item' => 'Посмотреть вебинар',
+        'search_items' => 'Найти вебинар',
+        'not_found' => 'Вебинаров не найдено',
+        'not_found_in_trash' => 'В корзине вебинаров не найдено',
+        'parent_item_colon' => '',
+        'menu_name' => 'Вебинары'
+
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'query_var' => true,
+        'rewrite' => true,
+        'capability_type' => 'post',
+        'has_archive' => true,
+        'hierarchical' => false,
+        'menu_position' => null,
+        'supports' => array('title', 'editor', 'thumbnail')
+    );
+    register_post_type('webinar', $args);
+}
+
+add_action('add_meta_boxes', 'additional_fields_webinar', 1);
+
+function additional_fields_webinar() {
+    add_meta_box( 'extra_fields', 'Дополнительная информация по вебинару', 'extra_fields_box_webinar', 'webinar', 'normal', 'high'  );
+}
+
+function extra_fields_box_webinar( $post ){
+    ?>
+    <p>Дата проведения вебинара: <input type="date" name="extra[date_webinar]" value="<?=get_post_meta($post->ID, 'date_webinar',true)?>" id="date_webinar"/></p>
+    <p>Длительность вебинара: <input type="text" name="extra[duration]" value="<?=get_post_meta($post->ID, 'duration',true)?>" id="duration_webinar"></p>
+    <p>Перерыв: <input type="text" name="extra[break]" value="<?=get_post_meta($post->ID, 'break',true)?>" id="break_webinar"></p>
+    <p>Начало вебинара в: <input type="text" name="extra[time]" value="<?=get_post_meta($post->ID, 'time',true)?>" id="time_webinar"></p>
+    <p>Выберите спикера:
+        <?php $speaker = new WP_Query( array( 'post_type' => 'speaker') );
+        $meta_values = get_post_meta($post->ID,'speaker',true);
+        $meta_values = json_decode($meta_values);
+        //prn($meta_values);
+        ?>
+        <select multiple name="extra[speaker][]">
+            <option disabled>Выберите спикера</option>
+
+            <?php
+            foreach ($speaker->posts as $s):?>
+                <option <?php if(!empty($meta_values) && in_array($s->ID,$meta_values)){echo 'selected';}?> value="<?=$s->ID;?>"><?=$s->post_title;?></option>
+            <?php endforeach;?>
+        </select>
+    </p>
+    <?php
+}
+/**********конец вебинары*********/
+
+
+
+/**********Спикеры*********/
+add_action('init', 'speaker_custom_init');
+function speaker_custom_init()
+{
+    $labels = array(
+        'name' => 'Спикеры', // Основное название типа записи
+        'singular_name' => 'Спикер', // отдельное название записи типа Book
+        'add_new' => 'Добавить спикера',
+        'add_new_item' => 'Добавить нового спикера',
+        'edit_item' => 'Редактировать спикера',
+        'new_item' => 'Новый спикер',
+        'view_item' => 'Посмотреть спикера',
+        'search_items' => 'Найти спикера',
+        'not_found' => 'Спикеров не найдено',
+        'not_found_in_trash' => 'В корзине спикеров не найдено',
+        'parent_item_colon' => '',
+        'menu_name' => 'Спикеры'
+
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'query_var' => true,
+        'rewrite' => true,
+        'capability_type' => 'post',
+        'has_archive' => true,
+        'hierarchical' => false,
+        'menu_position' => null,
+        'supports' => array('title', 'editor', 'thumbnail')
+    );
+    register_post_type('speaker', $args);
+}
+/**********Конец спикеры*********/
+
+
+// включаем обновление полей при сохранении
+add_action('save_post', 'my_extra_fields_update', 0);
+
+/* Сохраняем данные, при сохранении поста */
+function my_extra_fields_update( $post_id ){
+    if (isset($_POST['extra'])) {
+        $speaker = json_encode($_POST['extra']['speaker'],JSON_UNESCAPED_UNICODE);
+        update_post_meta($post_id, 'speaker', $speaker);
+        unset($_POST['extra']['speaker']);
+
+    foreach( $_POST['extra'] as $key=>$value ){
+        if( empty($value) ){
+            delete_post_meta($post_id, $key); // удаляем поле если значение пустое
+            continue;
+        }
+
+        update_post_meta($post_id, $key, $value); // add_post_meta() работает автоматически
+    }
+    }
+    return $post_id;
 }
