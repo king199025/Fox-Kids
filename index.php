@@ -17,7 +17,7 @@
             //$page = (get_query_var('page')) ? get_query_var('page') : 1;
 
             $recent = new WP_Query(array(
-                'posts_per_page' => 1,
+                'posts_per_page' => 8,
                 'cat'=> $id,
                 'paged' => $_GET['page'],
                 ));
@@ -35,7 +35,7 @@
                     <div class="name_m_a" onclick="location.href='<?=$post->guid;?>'"><?=$post->post_title?></div>
                     <a href="" class="img_m_a"><?=get_the_post_thumbnail($post->ID);?></a>
                     <div class="text_m_a">
-                        <?=get_extended( $post->post_content )['main']; ?>
+                        <?= $post->post_content; ?>
                     </div>
                     <div class="read_more_m_a" onclick="location.href='<?=$post->guid;?>'">Читать подробнее</div>
                     <div class="share_m_a">

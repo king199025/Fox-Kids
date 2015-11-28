@@ -1,6 +1,7 @@
 var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 jQuery(document).ready(function ($) {
+    var currentPage = parseInt($('.current').text());
     if ($('#w_img_f').length == 0) {
         $('#w_speaker').addClass('w_not_img');
     }
@@ -85,6 +86,23 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    $('.load_more').on('click',function(){
+       // var page = parseInt($('.current').text());
+
+        //alert(page);
+        $.ajax({
+            url: myajax, //url, к которому обращаемся
+            type: "POST",
+            data: "action=morePosts&page=" + currentPage,
+            success: function(data){
+                $('.pages_control').before(data);
+                currentPage++;
+            }
+        });
+    });
+
+
 
     $('.page_item').on('click', function(){
         var a = $(this).children();
