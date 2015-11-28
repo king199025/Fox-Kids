@@ -17,7 +17,7 @@
             //$page = (get_query_var('page')) ? get_query_var('page') : 1;
 
             $recent = new WP_Query(array(
-                'posts_per_page' => 1,
+                'posts_per_page' => 8,
                 'cat'=> $id,
                 'paged' => $_GET['page'],
                 ));

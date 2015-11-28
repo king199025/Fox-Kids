@@ -43,8 +43,13 @@ while($loop->have_posts()) : $loop->the_post();
         ?>
         <div class="web_preview w_p_small" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
             <div class="web_p_name"><?=$post->post_title;?></div>
-            <div class="web_p_speaker_name">Константин Константинопольский
-                <br>Говард Гарднер</div>
+            <div class="web_p_speaker_name">
+                <?php
+                foreach ($speaker as $s):
+                    echo get_post($s)->post_title.'<br>';
+                endforeach;
+                ?>
+            </div>
             <div class="web_p_button" onclick="location.href='<?=$post->guid;?>'">Записаться</div>
             <div class="web_p_date"><?=date('d.m.y',strtotime($data));?></div>
         </div>
@@ -55,7 +60,13 @@ while($loop->have_posts()) : $loop->the_post();
         ?>
         <div class="web_preview w_p_small web_preview_with_bg" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
             <div class="web_p_name"><?=$post->post_title;?></div>
-            <div class="web_p_speaker_name">Константин Константинопольский</div>
+            <div class="web_p_speaker_name">
+                <?php
+                foreach ($speaker as $s):
+                    echo get_post($s)->post_title.'<br>';
+                endforeach;
+                ?>
+            </div>
             <div class="web_p_button" onclick="location.href='<?=$post->guid;?>'" >Записаться</div>
             <div class="web_p_date"><?=date('d.m.y',strtotime($data));?></div>
         </div>

@@ -28,6 +28,18 @@ jQuery(document).ready(function ($) {
             setTimeout(function () {
                 $('.w_error').removeClass('active');
             }, 3500);
+        }else{
+            var name = $('#webinar_n_sn').val();
+            var mail = $('#webinar_email').val();
+            var webinar = $(this).attr('webinar');
+            $.ajax({
+                url: myajax, //url, к которому обращаемся
+                type: "POST",
+                data: "action=record_webinar&email=" + mail + "&name=" + name + "&webinar=" + webinar,
+                success: function(data){
+                    $('#box_c_i_i_w').html('<span class="textDelivery">Спасибо, ваша заявка принята!</span>');
+                }
+            });
         }
         e.preventDefault();
     });

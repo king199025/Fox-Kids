@@ -731,3 +731,30 @@ register_widget('Lesson_Widget');
 /**/
 /*----------------------------КОНЕЦ САЙДБАР-------------------------------------------*/
 
+function name_mon($mon)
+{
+    $months = Array(
+        '1' => 'января',
+        '2' => 'февраля',
+        '3' => 'марта',
+        '4' => 'апреля',
+        '5' => 'мая',
+        '6' => 'июня',
+        '7' => 'июля',
+        '8' => 'августа',
+        '9' => 'сентября',
+        '10' => 'октября',
+        '11' => 'ноября',
+        '12' => 'декабря'
+    );
+    return $months[$mon];
+}
+
+add_action('wp_ajax_record_webinar', 'record_webinar');
+add_action('wp_ajax_nopriv_record_webinar', 'record_webinar');
+
+function record_webinar(){
+    $text = $_POST['name']." записался на вебинар ".$_POST['webinar']." email для связи - ".$_POST['email'];
+    mail(get_theme_mod('mail_textbox_delivery'),'Запись на вебинар',$text);
+    die();
+}
