@@ -285,8 +285,6 @@ function extra_fields_box_webinar( $post ){
 }
 /**********конец вебинары*********/
 
-
-
 /**********Спикеры*********/
 add_action('init', 'speaker_custom_init');
 function speaker_custom_init()
@@ -731,6 +729,7 @@ register_widget('Lesson_Widget');
 /**/
 /*----------------------------КОНЕЦ САЙДБАР-------------------------------------------*/
 
+
 function name_mon($mon)
 {
     $months = Array(
@@ -758,3 +757,32 @@ function record_webinar(){
     mail(get_theme_mod('mail_textbox_delivery'),'Запись на вебинар',$text);
     die();
 }
+
+/*----------------------------- ПОСТЫ НА ГЛАВНОЙ -------------------------------------*/
+
+add_action('wp_ajax_morePosts', 'getCategoryPost');
+add_action('wp_ajax_nopriv_morePosts', 'getCategoryPost');
+
+function getCategoryPost(){
+    $id = 3; // ID заданной рубрики
+    $count = 8;
+
+    if(isset($_POST['page'])){
+        $paged = $_POST['page'];
+    }else{
+        $paged = 1;
+    }
+
+    $posts = get_posts( array(
+        'numberposts'     => $count, // тоже самое что posts_per_page
+        'offset'          => $count*$paged,
+        'category'        => $id,
+    ) );
+
+    $parser = new Parser();
+    $parser->render(TM_DIR . '/view/post.php', ['posts' => $posts]);
+    die();
+}
+
+/*-------------------------- КОНЕЦ ПОСТОВ НА ГЛАВНОЙ ---------------------------------*/
+
