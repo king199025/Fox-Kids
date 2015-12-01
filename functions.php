@@ -786,3 +786,57 @@ function getCategoryPost(){
 
 /*-------------------------- КОНЕЦ ПОСТОВ НА ГЛАВНОЙ ---------------------------------*/
 
+/*----------------------Список городов--------------------*/
+add_action('init', 'city_custom_init');
+function city_custom_init()
+{
+    $labels = array(
+        'name' => 'Города', // Основное название типа записи
+        'singular_name' => 'Город', // отдельное название записи типа Book
+        'add_new' => 'Добавить город',
+        'add_new_item' => 'Добавить новый город',
+        'edit_item' => 'Редактировать город',
+        'new_item' => 'Новый город',
+        'view_item' => 'Посмотреть город',
+        'search_items' => 'Найти город',
+        'not_found' => 'Городов не найдено',
+        'not_found_in_trash' => 'В корзине городов не найдено',
+        'parent_item_colon' => '',
+        'menu_name' => 'Список городов');
+
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'query_var' => true,
+        'rewrite' => true,
+        'capability_type' => 'post',
+        'has_archive' => true,
+        'hierarchical' => false,
+        'menu_position' => null,
+
+        'supports' => array('title')
+    );
+    register_post_type('city', $args);
+}
+
+add_action('add_meta_boxes', 'additional_fields_city', 1);
+
+function additional_fields_city() {
+    add_meta_box( 'extra_fields', 'Ссылка', 'extra_fields_box_city', 'city', 'normal', 'high'  );
+}
+
+function extra_fields_box_city( $post ){
+    ?>
+
+    <p>Введите ссылку: <input type="text" name="extra[citylink]" value="<?=get_post_meta($post->ID, 'citylink',true)?>" id="duration_citylink"></p>
+
+    <?php
+}
+
+
+function get_city(){
+
+}

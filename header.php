@@ -11,6 +11,11 @@
 </head>
 
 <body>
+<?php
+$mypost = array( 'post_type' => 'city', );
+$city = new WP_Query( $mypost );
+//prn($city);
+?>
 <header class="page_with_mob_name">
 	<a href="/" class="logo"><img src="<?php echo get_theme_mod('logo_section'); ?>" alt=""></a>
 	<div class="buttons">
@@ -18,7 +23,7 @@
 		<div class="franchise">Франшиза Fox&amp;Kids</div>
 	</div>
 	<div class="number"><span><?php echo get_theme_mod('phone_textbox'); ?></span></div>
-	<div class="map" id="map">Оренбург</div>
+	<div class="map" id="map"><?=$city->post->post_title;?></div>
 	<nav class="pc_menu">
 		<!--<ul>
 			<li class="active"><a href="">Новости</a></li>
