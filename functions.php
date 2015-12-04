@@ -673,7 +673,7 @@ class Tags_Widget extends WP_Widget{
         $tags = get_tags($params);
         echo '<ul class="b_w_tags">';
         foreach ($tags as $tag) :
-            echo '<li><a href="'.get_tag_link($tag->term_id).'"></a>'.$tag->name.'</li>';
+            echo '<li><a href="'.get_tag_link($tag->term_id).'">'.$tag->name.'</a></li>';
         endforeach;
         echo '</ul>';
     }

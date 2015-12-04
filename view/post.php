@@ -5,7 +5,18 @@
     <span class="date"><?= date('d-m-Y', strtotime($post->post_date));?></span>
     <span class="tags">
         <span class="ts_m">Теги:</span>
-        <?php the_tags('<span class="t_name_m">','</span>, <span class="t_name_m">','</span>');?>
+        <?php the_tags('<span class="t_name_m">','</span>, <span class="t_name_m">','</span>');
+
+        $tag = get_the_tags( $post->ID );
+        foreach ($tag as $t) {
+            ?>
+                 <span class="t_name_m"><a href="<?=get_tag_link($t->term_id)?>"><?=$t->name?>,</a></span>
+            <?php
+
+        }
+
+        ?>
+
     </span>
     <div class="name_m_a" onclick="location.href='<?=$post->guid;?>'"><?=$post->post_title?></div>
     <a href="" class="img_m_a"><?=get_the_post_thumbnail($post->ID);?></a>
