@@ -481,7 +481,6 @@ class Anounce_Widget extends WP_Widget{
     }
     function getAnounceListings($numberOfListings) { //html
         global $post;
-        add_image_size( 'anounce_widget_size', 85, 45, false );
         $listings = new WP_Query();
         $listings->query('post_type=anounces&posts_per_page=' . $numberOfListings );
         if($listings->found_posts > 0) {
@@ -491,7 +490,7 @@ class Anounce_Widget extends WP_Widget{
 
                 $listItem = '<article class="aside_a">';
                 $listItem .= '<div class="name_a_a">'.get_the_title() . '</div>';
-                $listItem .= '<div class="img_a_a">'.get_the_post_thumbnail($post->ID, 'anounce_widget_size').'</div>';
+                $listItem .= '<div class="img_a_a">'.get_the_post_thumbnail($post->ID, 'full').'</div>';
                 $listItem .= ' <div class="text_a_a">'.get_the_content().'</div>';
                 $listItem .= '<a href="' . get_post_meta($post->ID, "link", 1) . '"><div class="button_a_a">Узнать подробнее</div></a></article>';
 
