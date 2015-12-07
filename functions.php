@@ -262,10 +262,8 @@ function additional_fields_webinar() {
 
 function extra_fields_box_webinar( $post ){
     ?>
-    <p>Дата проведения вебинара: <input type="date" name="extra[date_webinar]" value="<?=get_post_meta($post->ID, 'date_webinar',true)?>" id="date_webinar"/></p>
-    <p>Длительность вебинара: <input type="text" name="extra[duration]" value="<?=get_post_meta($post->ID, 'duration',true)?>" id="duration_webinar"></p>
-    <p>Перерыв: <input type="text" name="extra[break]" value="<?=get_post_meta($post->ID, 'break',true)?>" id="break_webinar"></p>
-    <p>Начало вебинара в: <input type="text" name="extra[time]" value="<?=get_post_meta($post->ID, 'time',true)?>" id="time_webinar"></p>
+    <p>Дата проведения вебинара: <textarea type="text" name="extra[date_webinar]"  id="date_webinar"><?=get_post_meta($post->ID, 'date_webinar',true)?></textarea></p>
+
     <p>Выберите спикера:
         <?php $speaker = new WP_Query( array( 'post_type' => 'speaker') );
         $meta_values = get_post_meta($post->ID,'speaker',true);

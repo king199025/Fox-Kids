@@ -23,7 +23,7 @@ while($loop->have_posts()) : $loop->the_post();
     $data = get_post_meta($post->ID,'date_webinar',true);
     if ($k == 1){
         ?>
-        <div class="web_preview web_preview_with_bg" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>) #0099cc;">
+        <div class="web_preview web_preview_with_bg" onclick="location.href='<?=$post->guid;?>'" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>) #0099cc;">
             <div class="web_p_name"><?=$post->post_title;?></div>
             <div class="web_p_speaker_name">
                 <?php
@@ -41,7 +41,7 @@ while($loop->have_posts()) : $loop->the_post();
     }
     if($k == 2){
         ?>
-        <div class="web_preview w_p_small" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
+        <div class="web_preview w_p_small" onclick="location.href='<?=$post->guid;?>'" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
             <div class="web_p_name"><?=$post->post_title;?></div>
             <div class="web_p_speaker_name">
                 <?php
@@ -58,7 +58,7 @@ while($loop->have_posts()) : $loop->the_post();
     }
     if($k == 3){
         ?>
-        <div class="web_preview w_p_small web_preview_with_bg" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
+        <div class="web_preview w_p_small web_preview_with_bg" onclick="location.href='<?=$post->guid;?>'" style="background:url(<?=wp_get_attachment_url( get_post_thumbnail_id($post->ID) );?>);">
             <div class="web_p_name"><?=$post->post_title;?></div>
             <div class="web_p_speaker_name">
                 <?php

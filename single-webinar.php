@@ -36,11 +36,11 @@
                 <span class="d_name">Детали</span>
                 <?php
                 $data = get_post_meta($post->ID,'date_webinar',true);
-                $data = explode('-',$data);
 
                 ?>
-                <p class="time_w">Вебинар стартует <?=$data[2];?> <?=name_mon($data[1]);?>, в <?=get_post_meta($post->ID,'time',true)?>, длительность вебинара составит примерно <?=get_post_meta($post->ID,'duration',true)?> часа, с <?=get_post_meta($post->ID,'break',true)?>&#45;минутным кофебрейком.</p>
-                <div class="cost_w">Участие в вебинаре абсолютно бесплатное</div>
+                <p class="time_w"><?=$data?></p>
+                <!--<p class="time_w">Вебинар стартует <?/*=$data[2];*/?> <?/*=name_mon($data[1]);*/?>, в <?/*=get_post_meta($post->ID,'time',true)*/?>, длительность вебинара составит примерно <?/*=get_post_meta($post->ID,'duration',true)*/?> часа, с <?/*=get_post_meta($post->ID,'break',true)*/?>&#45;минутным кофебрейком.</p>
+                <div class="cost_w">Участие в вебинаре абсолютно бесплатное</div>-->
                 <div class="check_in" id="scroll_to_form">Записаться на вебинар</div>
                 <p class="check_in_d">Нажмите "Записаться на вебинар" и введите свой адрес электронной почты. Вам придёт ссылка для участия.</p>
             </div>
