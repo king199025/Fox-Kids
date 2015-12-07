@@ -100,8 +100,10 @@ jQuery(document).ready(function ($) {
     });
 
     $('.load_more').on('click',function(){
-       // var page = parseInt($('.current').text());
-
+       // var currentPage = parseInt($('.current').text());
+        if(isNaN(currentPage)){
+            currentPage = 1;
+        }
         //alert(page);
         $.ajax({
             url: myajax, //url, к которому обращаемся
