@@ -839,3 +839,26 @@ function extra_fields_box_city( $post ){
 function get_city(){
 
 }
+
+// Vkontakte shares count
+function getVkSharesCount($url){
+    $vk_request = file_get_contents('http://vkontakte.ru/share.php?act=count&index=1&url='.$url);
+    $tmp = array();
+    preg_match('/^VK.Share.count\(1, (\d+)\);$/i',$vk_request,$tmp);
+    echo $tmp[1];
+}
+
+// Facebook Shares count
+function getFbSharesCount($url){
+    $facebook_request = file_get_contents("http://graph.facebook.com/".$url);
+    $fb = json_decode($facebook_request);
+    echo $fb->shares;
+}
+
+//Odnoklassniki shares count
+function getOkSharesCount($url){
+    $odnocl_request = file_get_contents("http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=".$url);
+    $tmp = array();
+    preg_match("/^ODKL.updateCountOC\('[\d\w]+','(\d+)','(\d+)','(\d+)'\);$/i",$odnocl_request,$tmp);
+    echo $tmp[1];
+}
