@@ -6,6 +6,8 @@ get_header(); ?>
     $tags = get_tags(array('slug' => single_tag_title('', false)));
     $args = array(
         'tag' => $tags[0]->slug,
+        'posts_per_page' => 8,
+        'paged' => $_GET['page'],
     );
     $recent = new WP_Query($args);
 ?>
