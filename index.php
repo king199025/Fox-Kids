@@ -1,86 +1,61 @@
-﻿
-<?php get_header();?>
+﻿<?php
+/**
+ * The main template file
+ *
+ * This is the most generic template file in a WordPress theme and one
+ * of the two required files for a theme (the other being style.css).
+ * It is used to display a page when nothing more specific matches a query,
+ * e.g., it puts together the home page when no home.php file exists.
+ *
+ * @link https://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package WordPress
+ * @subpackage Twenty_Fourteen
+ * @since Twenty Fourteen 1.0
+ */
 
-<section class="news_f_k parallax-window" data-parallax="scroll" data-image-src="<?=get_template_directory_uri()?>/images/news_f_k.png" id="news_f_k">
-    <span class="f_k_solid f_k_op">Новости Fox&amp;Kids</span>
-    <span class="f_k_thin f_k_op">Все новости детской академии в <span id="f_k_city">Оренбурге</span></span>
-    <div class="f_k_a_d f_k_op" id="arrow_d"></div>
-</section>
+get_header(); ?>
 
-<main class="home-container">
+    <div id="main-content" class="main-content">
 
-    <section class="articles">
-        <div class="wrapper">
-            <?php
-            $id = 3; // ID заданной рубрики
+        <?php
+        if ( is_front_page() && twentyfourteen_has_featured_posts() ) {
+            // Include the featured content template.
+            get_template_part( 'featured-content' );
+        }
+        ?>
 
-            //$page = (get_query_var('page')) ? get_query_var('page') : 1;
+        <div id="primary" class="content-area">
+            <div id="content" class="site-content" role="main">
 
-            $recent = new WP_Query(array(
-                'posts_per_page' => 8,
-                'cat'=> $id,
-                'paged' => $_GET['page'],
-                ));
+                <?php
+                if ( have_posts() ) :
+                    // Start the Loop.
+                    while ( have_posts() ) : the_post();
 
-            while($recent->have_posts()) : $recent->the_post();
+                        /*
+                         * Include the post format-specific template for the content. If you want to
+                         * use this in a child theme, then include a file called called content-___.php
+                         * (where ___ is the post format) and that will be used instead.
+                         */
+                        get_template_part( 'content', get_post_format() );
+
+                    endwhile;
+                    // Previous/next post navigation.
+                    twentyfourteen_paging_nav();
+
+                else :
+                    // If no content, include the "No posts found" template.
+                    get_template_part( 'content', 'none' );
+
+                endif;
                 ?>
 
-                <article class="article_m">
-                    <span class="date"><?=date('d-m-Y', strtotime($post->post_date));?></span>
+            </div><!-- #content -->
+        </div><!-- #primary -->
+        <?php get_sidebar( 'content' ); ?>
+    </div><!-- #main-content -->
 
-                    <span class="tags">
-                        <span class="ts_m">Теги:</span>
-                        <?php the_tags('<span class="t_name_m">','</span>, <span class="t_name_m">','</span>');?>
-                    </span>
-                    <div class="name_m_a" onclick="location.href='<?=$post->guid;?>'"><?=$post->post_title?></div>
-                    <a href="" class="img_m_a"><?=get_the_post_thumbnail($post->ID);?></a>
-                    <div class="text_m_a">
-                        <?= $post->post_content; ?>
-                    </div>
-                    <div class="read_more_m_a" onclick="location.href='<?=$post->guid;?>'">Читать подробнее</div>
-                    <div class="share_m_a">
-                        <span class="share_m_a_name">Рассказать друзьям:</span>
-                        <div class="vk_m_a">
-                            <a href="http://vk.com/share.php?url=<?= get_permalink(get_the_ID()); ?>" target="_blank">
-                                <div class="s_icon"></div>
-                                <div class="s_number"><?php getVkSharesCount(get_permalink(get_the_ID())) ?></div>
-                            </a>
-                        </div>
-                        <div class="fb_m_a">
-                            <a href="http://www.facebook.com/sharer.php?u=<?= get_permalink(get_the_ID()); ?>" target="_blank">
-                                <div class="s_icon"></div>
-                                <div class="s_number"><?php getFbSharesCount(get_permalink(get_the_ID())) ?></div>
-                            </a>
-                        </div>
-                        <div class="od_m_a">
-                            <a href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&st.s=1&st._surl=<?= get_permalink(get_the_ID()); ?>" target="_blank">
-                                <div class="s_icon"></div>
-                                <div class="s_number"><?php getOkSharesCount(get_permalink(get_the_ID())) ?></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="line_m_a"></div>
-                </article>
-            <?php endwhile; ?>
-
-
-
-            <section class="pages_control">
-                <div class="load_more">Загрузить еще</div>
-                <?php my_pagenavi($recent); ?>
-            </section>
-        </div>
-    </section>
-    <aside>
-        <div class="aside_wrapper">
-    <?php if ( is_active_sidebar( 'main_sidebar' ) ) : ?>
-            <?php dynamic_sidebar( 'main_sidebar' ); ?>
-    <?php endif; ?>
-
-    <div class="madeIn">Сайт разработан в <a href="">бренд-бюро</a></div>
-    </div>
-    </aside>
-    <? /*get_sidebar();*/?>
-</main>
-
-<?php get_footer(); ?>
+<?php
+get_sidebar();
+get_footer();

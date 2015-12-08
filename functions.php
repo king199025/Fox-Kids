@@ -262,7 +262,7 @@ function additional_fields_webinar() {
 
 function extra_fields_box_webinar( $post ){
     ?>
-    <p>Дата проведения вебинара: <textarea type="text" name="extra[date_webinar]"  id="date_webinar"><?=get_post_meta($post->ID, 'date_webinar',true)?></textarea></p>
+    <p>Детали: <textarea type="text" name="extra[date_webinar]"  id="date_webinar"><?=get_post_meta($post->ID, 'date_webinar',true)?></textarea></p>
 
     <p>Выберите спикера:
         <?php $speaker = new WP_Query( array( 'post_type' => 'speaker') );
@@ -843,14 +843,20 @@ function getVkSharesCount($url){
     $vk_request = file_get_contents('http://vkontakte.ru/share.php?act=count&index=1&url='.$url);
     $tmp = array();
     preg_match('/^VK.Share.count\(1, (\d+)\);$/i',$vk_request,$tmp);
-    echo $tmp[1];
+    if($tmp[1] != 0){
+        echo $tmp[1];
+    }
+
 }
 
 // Facebook Shares count
 function getFbSharesCount($url){
     $facebook_request = file_get_contents("http://graph.facebook.com/".$url);
     $fb = json_decode($facebook_request);
-    echo $fb->shares;
+    if(!empty($fb->shares)){
+        echo $fb->shares;
+    }
+
 }
 
 //Odnoklassniki shares count
@@ -858,5 +864,8 @@ function getOkSharesCount($url){
     $odnocl_request = file_get_contents("http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=".$url);
     $tmp = array();
     preg_match("/^ODKL.updateCountOC\('[\d\w]+','(\d+)','(\d+)','(\d+)'\);$/i",$odnocl_request,$tmp);
-    echo $tmp[1];
+    if(!empty($tmp[1])){
+        echo $tmp[1];
+    }
+
 }
