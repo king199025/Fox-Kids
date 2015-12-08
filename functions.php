@@ -861,10 +861,12 @@ function getFbSharesCount($url){
 
 //Odnoklassniki shares count
 function getOkSharesCount($url){
-    $odnocl_request = file_get_contents("http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=".$url);
+    $odnocl_request = file_get_contents("http://www.odnoklassniki.ru/dk?st.cmd=extLike&uid=odklocs0&ref=".$url);
     $tmp = array();
-    preg_match("/^ODKL.updateCountOC\('[\d\w]+','(\d+)','(\d+)','(\d+)'\);$/i",$odnocl_request,$tmp);
-    if(!empty($tmp[1])){
+
+    preg_match("/^ODKL.updateCount\('[\d\w]+','(\d+)'\);$/i",$odnocl_request,$tmp);
+   // prn($tmp);
+    if(!empty($tmp[1]) && $tmp[1] != 0){
         echo $tmp[1];
     }
 
